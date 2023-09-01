@@ -1,0 +1,15 @@
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\bin\Debug\net6.0\RayTracing.exe
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\bin\Debug\net6.0\RayTracing.deps.json
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\bin\Debug\net6.0\RayTracing.runtimeconfig.json
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\bin\Debug\net6.0\RayTracing.dll
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\bin\Debug\net6.0\RayTracing.pdb
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\RayTracing.csproj.AssemblyReference.cache
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\RayTracing.GeneratedMSBuildEditorConfig.editorconfig
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\RayTracing.AssemblyInfoInputs.cache
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\RayTracing.AssemblyInfo.cs
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\RayTracing.csproj.CoreCompileInputs.cache
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\RayTracing.dll
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\refint\RayTracing.dll
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\RayTracing.pdb
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\RayTracing.genruntimeconfig.cache
+D:\Programmering\RayTracyProject\RayTracy\RayTracy\RayTracing\obj\Debug\net6.0\ref\RayTracing.dll
