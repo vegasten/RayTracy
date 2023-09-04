@@ -51,6 +51,4 @@ public class Sphere : IGeometricObject
 
         return false;
     }
-
 }
-
