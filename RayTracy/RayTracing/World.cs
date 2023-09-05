@@ -7,7 +7,7 @@
         public Sphere Sphere;
         public List<IGeometricObject> GeometricObjects = new List<IGeometricObject>();
 
-        private float _cameraDistance = 85f;
+        private float _cameraDistance = 200f;
         private ITracer _tracer;
 
         private RGBColor[,] _imageBuffer;
@@ -15,9 +15,9 @@
         public void Build()
         {
             ViewPlane = new ViewPlane();
-            ViewPlane.SetWidthResolution(200);
+            ViewPlane.SetWidthResolution(300);
             ViewPlane.SetHeightResolution(200);
-            _imageBuffer = new RGBColor[200, 200];
+            _imageBuffer = new RGBColor[300, 200];
 
             ViewPlane.SetPixelSize(1f);
             ViewPlane.SetGamma(1f);
@@ -26,10 +26,10 @@
 
             _tracer = new MultipleObjectsTracer(this);
 
-            //var sphere1 = new Sphere(new Point3D(0, -25, 0), 140, 0, new RGBColor(255, 0, 0));
-            var sphere2 = new Sphere(new Point3D(0, 0, 0), 120, 0, new RGBColor(255, 255, 0));
+            var sphere1 = new Sphere(new Point3D(0, 0, 0), 40, 0, new RGBColor(255, 0, 0));
+            var sphere2 = new Sphere(new Point3D(0, -50, -20), 40, 0, new RGBColor(255, 255, 0));
 
-            //AddObject(sphere1);
+            AddObject(sphere1);
             AddObject(sphere2);
         }
 
@@ -63,7 +63,7 @@
                     float viewPlaneY =
                         ViewPlane.PixelSize * (y - 0.5f * (ViewPlane.HeightRes - 1.0f));
 
-                    ray.SetOrigin(new Point3D(viewPlaneX, viewPlaneY, _cameraDistance));
+                    ray.SetOrigin(new Point3D(viewPlaneX, viewPlaneY, -_cameraDistance)); // TODO, Minus here?????
 
                     var color = _tracer.Trace(ray);
                     _imageBuffer[x, y] = color;

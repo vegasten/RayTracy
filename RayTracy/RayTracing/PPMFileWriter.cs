@@ -16,9 +16,10 @@
             writer.WriteLine(255);
 
             // BODY
-            for (int x = 0; x < imageHeight; x++)
+            // Start in the bottow left corner
+            for (int y = imageHeight - 1; y >= 0; y--)
             {
-                for (int y = 0; y < imageWidth; y++)
+                for (int x = 0; x < imageWidth; x++)
                 {
                     writer.WriteLine(colorBuffer[x, y].ToPPMFormat());
                 }
