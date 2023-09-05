@@ -28,9 +28,16 @@
 
             var sphere1 = new Sphere(new Point3D(0, 0, 0), 40, 0, new RGBColor(255, 0, 0));
             var sphere2 = new Sphere(new Point3D(0, -50, -20), 40, 0, new RGBColor(255, 255, 0));
+            var plane = new Plane(
+                Point3D.Zero(),
+                new Vector3D(0, 1, 1),
+                0,
+                new RGBColor(0, 200, 0)
+            );
 
             AddObject(sphere1);
             AddObject(sphere2);
+            AddObject(plane);
         }
 
         private void BuildSingleRedSphere()
