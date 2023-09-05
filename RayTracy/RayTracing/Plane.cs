@@ -13,6 +13,11 @@ public class Plane : IGeometricObject
         _kEpsilon = kEpsilon;
     }
 
+    public RGBColor GetColor()
+    {
+        throw new NotImplementedException();
+    }
+
     public bool IsHit(Ray ray, ref float tMin, ref HitRecording hitRecording)
     {
         float t = (_point - ray.Origin) * _normal / (ray.Direction * _normal);
@@ -22,7 +27,6 @@ public class Plane : IGeometricObject
             tMin = t;
             hitRecording.Normal = _normal;
             hitRecording.LocalHitPoint = ray.Origin + t * ray.Direction;
-
         }
 
         return false;

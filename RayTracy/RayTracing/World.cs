@@ -5,13 +5,35 @@
         public ViewPlane ViewPlane;
         public RGBColor BackgroundColor;
         public Sphere Sphere;
+        public List<IGeometricObject> GeometricObjects = new List<IGeometricObject>();
 
-        private float _cameraDistance = 100f;
+        private float _cameraDistance = 85f;
         private ITracer _tracer;
 
         private RGBColor[,] _imageBuffer;
 
         public void Build()
+        {
+            ViewPlane = new ViewPlane();
+            ViewPlane.SetWidthResolution(200);
+            ViewPlane.SetHeightResolution(200);
+            _imageBuffer = new RGBColor[200, 200];
+
+            ViewPlane.SetPixelSize(1f);
+            ViewPlane.SetGamma(1f);
+
+            BackgroundColor = new RGBColor(20, 20, 20);
+
+            _tracer = new MultipleObjectsTracer(this);
+
+            //var sphere1 = new Sphere(new Point3D(0, -25, 0), 140, 0, new RGBColor(255, 0, 0));
+            var sphere2 = new Sphere(new Point3D(0, 0, 0), 120, 0, new RGBColor(255, 255, 0));
+
+            //AddObject(sphere1);
+            AddObject(sphere2);
+        }
+
+        private void BuildSingleRedSphere()
         {
             BackgroundColor = new RGBColor(52, 152, 235);
             ViewPlane = new ViewPlane();
@@ -24,7 +46,7 @@
 
             _tracer = new SingleSphereTracer(this);
 
-            Sphere = new Sphere(Point3D.Zero(), 100.1f, 0f);
+            Sphere = new Sphere(Point3D.Zero(), 100.1f, 0f, new RGBColor(255, 0, 0));
         }
 
         public void RenderScene()
@@ -49,9 +71,33 @@
             }
         }
 
+        public void AddObject(IGeometricObject geometricObject)
+        {
+            GeometricObjects.Add(geometricObject);
+        }
+
         public RGBColor[,] GetImageBuffer()
         {
             return _imageBuffer;
+        }
+
+        public HitRecording HitBareBonesObjects(Ray ray)
+        {
+            float t = 0;
+            float tmin = float.MaxValue;
+            HitRecording hitRecording = new HitRecording();
+
+            for (int i = 0; i < GeometricObjects.Count; i++)
+            {
+                if (GeometricObjects[i].IsHit(ray, ref t, ref hitRecording) && t < tmin)
+                {
+                    hitRecording.DidHit = true;
+                    tmin = t;
+                    hitRecording.Color = GeometricObjects[i].GetColor();
+                }
+            }
+
+            return hitRecording;
         }
     }
 }

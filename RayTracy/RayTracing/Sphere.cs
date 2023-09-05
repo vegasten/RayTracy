@@ -5,12 +5,19 @@ public class Sphere : IGeometricObject
     private Point3D _center;
     private float _radius;
     private double _kEpsilon;
+    private RGBColor _color;
 
-    public Sphere(Point3D center, float radius, double kEpsilon)
+    public Sphere(Point3D center, float radius, double kEpsilon, RGBColor color)
     {
         _center = center;
         _radius = radius;
         _kEpsilon = kEpsilon;
+        _color = color;
+    }
+
+    public RGBColor GetColor()
+    {
+        return _color;
     }
 
     public bool IsHit(Ray ray, ref float tMin, ref HitRecording hitRecording)
