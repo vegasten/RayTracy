@@ -17,6 +17,7 @@
             ViewPlane = new ViewPlane();
             ViewPlane.SetWidthResolution(300);
             ViewPlane.SetHeightResolution(200);
+            ViewPlane.SetNumberOfSamples(25);
             _imageBuffer = new RGBColor[300, 200];
 
             ViewPlane.SetPixelSize(1f);
@@ -26,18 +27,13 @@
 
             _tracer = new MultipleObjectsTracer(this);
 
-            var sphere1 = new Sphere(new Point3D(0, 0, 0), 40, 0, new RGBColor(255, 0, 0));
-            var sphere2 = new Sphere(new Point3D(0, -50, -20), 40, 0, new RGBColor(255, 255, 0));
-            var plane = new Plane(
-                Point3D.Zero(),
-                new Vector3D(0, 1, 1),
-                0,
-                new RGBColor(0, 200, 0)
-            );
+            var sphere1 = new Sphere(new Point3D(0, 0, 0), 40, 0, RGBColor.Red);
+            var sphere2 = new Sphere(new Point3D(0, -50, -20), 40, 0, RGBColor.Yellow);
+            var plane = new Plane(Point3D.Zero(), new Vector3D(0, 1, 1), 0, RGBColor.Green);
 
             AddObject(sphere1);
-            AddObject(sphere2);
-            AddObject(plane);
+            //AddObject(sphere2);
+            //AddObject(plane);
         }
 
         private void BuildSingleRedSphere()
@@ -59,21 +55,43 @@
         public void RenderScene()
         {
             var ray = new Ray(Point3D.Zero(), new Vector3D(0, 0, -1f));
+            var random = new Random();
+
+            int n = (int)MathF.Sqrt(ViewPlane.NumberOfSamples);
+            Point2D samplePoint = new Point2D();
 
             for (int y = 0; y < ViewPlane.HeightRes; y++)
             {
                 for (int x = 0; x < ViewPlane.WidthRes; x++)
                 {
-                    float viewPlaneX =
-                        ViewPlane.PixelSize * (x - 0.5f * (ViewPlane.WidthRes - 1.0f));
+                    var pixelColorSum = RGBColor.Black;
 
-                    float viewPlaneY =
-                        ViewPlane.PixelSize * (y - 0.5f * (ViewPlane.HeightRes - 1.0f));
+                    for (int p = 0; p < n; p++)
+                    {
+                        for (int q = 0; q < n; q++)
+                        {
+                            samplePoint.X =
+                                ViewPlane.PixelSize
+                                * (
+                                    x
+                                    - 0.5f * ViewPlane.WidthRes
+                                    + (q + (float)random.NextDouble() - 0.5f) / n // Jitter
+                                );
+                            samplePoint.Y =
+                                ViewPlane.PixelSize
+                                * (
+                                    y
+                                    - 0.5f * ViewPlane.HeightRes
+                                    + (p + (float)random.NextDouble() - 0.5f) / n // Jitter
+                                );
 
-                    ray.SetOrigin(new Point3D(viewPlaneX, viewPlaneY, -_cameraDistance)); // TODO, Minus here?????
+                            ray.SetOrigin(samplePoint, -_cameraDistance); // TODO, Minus here?????
+                            pixelColorSum += _tracer.Trace(ray);
+                        }
+                    }
 
-                    var color = _tracer.Trace(ray);
-                    _imageBuffer[x, y] = color;
+                    var averagePixelColor = pixelColorSum / ViewPlane.NumberOfSamples;
+                    _imageBuffer[x, y] = averagePixelColor;
                 }
             }
         }

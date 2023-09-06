@@ -2,6 +2,13 @@
 
 public record RGBColor(float R, float G, float B)
 {
+    public static RGBColor Yellow = new RGBColor(255, 255, 0);
+    public static RGBColor Red = new RGBColor(255, 0, 0);
+    public static RGBColor Green = new RGBColor(0, 255, 0);
+    public static RGBColor Blue = new RGBColor(0, 0, 255);
+    public static RGBColor Black = new RGBColor(0, 0, 0);
+    public static RGBColor White = new RGBColor(255, 255, 255);
+
     public string ToPPMFormat()
     {
         return $"{R} {G} {B}";

@@ -11,8 +11,13 @@ public class Ray
         Direction = direction;
     }
 
-    internal void SetOrigin(Point3D origin)
+    public void SetOrigin(Point3D origin)
     {
         Origin = origin;
+    }
+
+    public void SetOrigin(Point2D origin, float Z)
+    {
+        Origin = new Point3D(origin.X, origin.Y, Z);
     }
 }

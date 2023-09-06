@@ -8,6 +8,12 @@
         public float PixelSize { get; private set; }
         public float Gamma { get; private set; }
         public float InvertedGamma { get; private set; }
+        public int NumberOfSamples { get; private set; } // Should be square
+
+        public void SetNumberOfSamples(int numberOfSamples)
+        {
+            NumberOfSamples = numberOfSamples;
+        }
 
         public void SetWidthResolution(int widthRes)
         {
