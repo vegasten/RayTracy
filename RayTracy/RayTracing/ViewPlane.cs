@@ -1,4 +1,6 @@
-﻿namespace RayTracing
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace RayTracing
 {
     public class ViewPlane
     {
@@ -8,10 +10,22 @@
         public float PixelSize { get; private set; }
         public float Gamma { get; private set; }
         public float InvertedGamma { get; private set; }
-        public int NumberOfSamples { get; private set; } // Should be square
+
+        public ISampler Sampler { get; private set; }
+
+        public int NumberOfSamples { get; private set; }
 
         public void SetNumberOfSamples(int numberOfSamples)
         {
+            if (numberOfSamples == 1)
+            {
+                Sampler = new RegularSampler(1);
+            }
+            else
+            {
+                Sampler = new JitteredSampler(numberOfSamples);
+            }
+
             NumberOfSamples = numberOfSamples;
         }
 
@@ -35,5 +49,12 @@
             Gamma = gamma;
             InvertedGamma = 1f / gamma;
         }
+
+        public void SetSampler(ISampler sampler)
+        {
+            Sampler = sampler;
+        }
+
+        public void SetSamples(int samples) { }
     }
 }

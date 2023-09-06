@@ -58,7 +58,6 @@
             var random = new Random();
 
             int n = (int)MathF.Sqrt(ViewPlane.NumberOfSamples);
-            Point2D samplePoint = new Point2D();
 
             for (int y = 0; y < ViewPlane.HeightRes; y++)
             {
@@ -66,28 +65,20 @@
                 {
                     var pixelColorSum = RGBColor.Black;
 
-                    for (int p = 0; p < n; p++)
-                    {
-                        for (int q = 0; q < n; q++)
-                        {
-                            samplePoint.X =
-                                ViewPlane.PixelSize
-                                * (
-                                    x
-                                    - 0.5f * ViewPlane.WidthRes
-                                    + (q + (float)random.NextDouble() - 0.5f) / n // Jitter
-                                );
-                            samplePoint.Y =
-                                ViewPlane.PixelSize
-                                * (
-                                    y
-                                    - 0.5f * ViewPlane.HeightRes
-                                    + (p + (float)random.NextDouble() - 0.5f) / n // Jitter
-                                );
+                    var samplePointsUnitBox = ViewPlane.Sampler.GenerateSamples();
 
-                            ray.SetOrigin(samplePoint, -_cameraDistance); // TODO, Minus here?????
-                            pixelColorSum += _tracer.Trace(ray);
-                        }
+                    for (int j = 0; j < ViewPlane.NumberOfSamples; j++)
+                    {
+                        var samplePointX =
+                            ViewPlane.PixelSize
+                            * (x - 0.5f * ViewPlane.WidthRes + samplePointsUnitBox[j].X);
+                        var samplePointY =
+                            ViewPlane.PixelSize
+                            * (y - 0.5f * ViewPlane.HeightRes + samplePointsUnitBox[j].Y);
+
+                        ray.SetOrigin(new Point3D(samplePointX, samplePointY, -_cameraDistance));
+
+                        pixelColorSum += _tracer.Trace(ray);
                     }
 
                     var averagePixelColor = pixelColorSum / ViewPlane.NumberOfSamples;
